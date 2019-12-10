@@ -1925,10 +1925,13 @@ func (p *githubRepoPoller) syncCommentsOnIssue(ctx context.Context, issueNum int
 	owner, repo := p.gr.id.Owner, p.gr.id.Repo
 	morePages := true // at least try the first. might be empty.
 	for morePages {
+		sinceCopy := since
+		directionOpt := "asc"
+		sortOpt := "updated"
 		ics, res, err := p.githubDirect.Issues.ListComments(ctx, owner, repo, int(issueNum), &github.IssueListCommentsOptions{
-			Since:       since,
-			Direction:   "asc",
-			Sort:        "updated",
+			Since:       &sinceCopy,
+			Direction:   &directionOpt,
+			Sort:        &sortOpt,
 			ListOptions: github.ListOptions{PerPage: 100},
 		})
 		if err != nil {
