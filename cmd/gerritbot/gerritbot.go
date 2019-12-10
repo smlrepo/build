@@ -876,7 +876,7 @@ func (b *bot) postGitHubMessageNoDup(ctx context.Context, org, repo string, issu
 	// See if there is a dup comment from when GerritBot last got
 	// its data from maintner.
 	ics, resp, err := b.githubClient.Issues.ListComments(ctx, org, repo, int(issueNum), &github.IssueListCommentsOptions{
-		Since:       since,
+		Since:       &since,
 		ListOptions: github.ListOptions{PerPage: 1000},
 	})
 	if err != nil {

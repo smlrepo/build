@@ -471,7 +471,7 @@ func (b *gopherbot) addGitHubComment(ctx context.Context, org, repo string, issu
 	// See if there is a dup comment from when gopherbot last got
 	// its data from maintner.
 	ics, _, err := b.ghc.Issues.ListComments(ctx, org, repo, int(issueNum), &github.IssueListCommentsOptions{
-		Since:       since,
+		Since:       &since,
 		ListOptions: github.ListOptions{PerPage: 1000},
 	})
 	if err != nil {
