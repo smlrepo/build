@@ -24,7 +24,6 @@ var maintnerClient = createMaintnerClient()
 
 func main() {
 	// authenticated handlers
-	handleFunc("/building", AuthHandler(buildingHandler))          // called by coordinator during builds
 	handleFunc("/clear-results", AuthHandler(clearResultsHandler)) // called by x/build/cmd/retrybuilds
 	handleFunc("/result", AuthHandler(resultHandler))              // called by coordinator after build
 
@@ -125,7 +124,7 @@ var goDash = &Dashboard{
 func init() {
 	var add []*Package
 	for _, r := range repos.ByGerritProject {
-		if r.HideFromDashboard || !strings.HasPrefix(r.ImportPath, "golang.org/x") || r.GoGerritProject == "" {
+		if !r.ShowOnDashboard() {
 			continue
 		}
 		add = append(add, &Package{
